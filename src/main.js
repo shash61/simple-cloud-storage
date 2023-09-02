@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 
-app.use('/api/v1', routes)
+app.use('/api', routes)
 
 dbConnect()
 

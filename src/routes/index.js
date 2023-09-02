@@ -8,7 +8,7 @@ router.get('/', (req,res)=>{
   console.log('rooot route')
 })
 
-router.use('/auth', authRoutes)
-router.use('/file', validAuth, fileRoutes)
+router.use('/v1/auth', authRoutes)
+router.use('/v1/file', validAuth, fileRoutes)
 
 module.exports = router

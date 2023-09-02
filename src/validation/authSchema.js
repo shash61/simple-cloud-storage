@@ -11,6 +11,15 @@ const signUpSchema = {
       bail: true
     }
   },
+  username:{
+    notEmpty: true,
+    errorMessage: "username must not be empty",
+    matches:{
+      options: /[a-zA-Z]/i,
+      errorMessage: "please enter a valid username"
+    },
+
+  },
   password:{
       isLength:{
         options: {min:8},

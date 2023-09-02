@@ -23,13 +23,9 @@ const registerUser = async(req,res)=>{
           email: email,
           password: hashedPass
         },{transaction: t})
-        // console.log(user,'updating')
-        await user.update({storagePath: `/usr/${user.id}`},{
-          where: {
-            id: user.id
-          }
-        },{transaction: t})
-        // console.log(updateRes,'update')
+        if(user){
+          await user.update({storagePath: `usr/${user.id}`},{transaction: t})
+        }
         return user
       })
       console.log(resp,'user')
