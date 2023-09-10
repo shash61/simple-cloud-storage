@@ -1,0 +1,463 @@
+WEBVTT
+
+00:00.180 --> 00:09.030
+Thomas Hardy is one of the four acid properties that defines a relational database management system.
+
+00:09.330 --> 00:16.980
+And I always say relational, but really it defines any database system, whether it's a sequel, graph
+
+00:17.250 --> 00:23.500
+time based, really anything that Thomas said is a very critical concept to understand.
+
+00:23.880 --> 00:28.200
+How about we jump into this lecture and discuss this beautiful concept?
+
+00:28.470 --> 00:35.400
+So talk about Atomic City, really, all the queries in a transaction must succeed.
+
+00:35.430 --> 00:39.030
+That is the definition offered Atomic City.
+
+00:39.060 --> 00:42.750
+We talked about what a transaction is really in that transaction lecture.
+
+00:43.020 --> 00:49.980
+And we said that all the ways in a given transaction is considered to be one unit of work, and that
+
+00:49.980 --> 00:53.350
+kind of defines what, what, what automaticity really is, right?
+
+00:53.640 --> 00:54.870
+It's like an atom.
+
+00:55.050 --> 01:00.720
+And until now, an atom cannot be split.
+
+01:01.080 --> 01:08.100
+I know there is a nuclear fission that kind of contradicts that, but this thing was defined in 1970,
+
+01:08.100 --> 01:11.040
+and I don't believe they discovered fission back then.
+
+01:11.040 --> 01:14.160
+I might be wrong, but that's where atomistic comes in the door.
+
+01:14.490 --> 01:16.800
+You treat this as an atom that cannot be split.
+
+01:17.310 --> 01:19.560
+All the queries in a transaction must succeed.
+
+01:21.160 --> 01:28.210
+If one query fail, what happens if one query fail for any reason, a failed constraint like the balance
+
+01:28.210 --> 01:39.640
+goes to minus one minus negative or a a duplicate primary key entry, right, or an actual invalid equals
+
+01:39.640 --> 01:40.180
+index.
+
+01:42.120 --> 01:49.080
+That is a failed query and what happens when you have one single, even if you had 100 successful queries
+
+01:49.620 --> 01:58.530
+in the same transaction, that one failure should roll back the transaction immediately because I said
+
+01:59.520 --> 02:00.690
+things went wrong.
+
+02:00.930 --> 02:02.430
+That's the rule of eternity.
+
+02:03.840 --> 02:10.170
+So what happened if the database goes down during my transaction, I can't really roll back because
+
+02:10.170 --> 02:11.310
+the database goes down.
+
+02:11.640 --> 02:17.070
+What have in this case, if the database went down prior to a commit, you didn't really commit the
+
+02:17.070 --> 02:17.730
+transaction.
+
+02:18.700 --> 02:23.350
+All the successful queries in the transsexual should be rolled back.
+
+02:23.610 --> 02:23.760
+Right?
+
+02:24.040 --> 02:30.350
+Even if you had 100 successful queries in this transaction and you didn't really fail, you didn't fail.
+
+02:30.370 --> 02:32.800
+But the database just crashed.
+
+02:33.400 --> 02:33.760
+All right.
+
+02:33.790 --> 02:35.470
+So the next query didn't really fail.
+
+02:36.400 --> 02:37.900
+So the database will restart.
+
+02:38.470 --> 02:45.370
+So once the database sort of starts, that's when the database should detect that, hey, there was
+
+02:46.280 --> 02:51.710
+a failure technically right, because microarrays didn't fail.
+
+02:51.710 --> 02:58.330
+But the database went down and I was made transaction and I didn't commit these changes made by the
+
+02:58.330 --> 02:59.110
+transaction.
+
+02:59.410 --> 03:03.100
+If the database is actually making, changes should be rolled back.
+
+03:03.580 --> 03:10.960
+That's why I always wanted to think about this as you read this, as I as I took, what is the database
+
+03:10.960 --> 03:12.970
+doing in a transaction?
+
+03:12.970 --> 03:15.640
+Is it actually writing to disk, right?
+
+03:15.970 --> 03:16.660
+I'm not going to.
+
+03:16.900 --> 03:18.010
+If what if I don't?
+
+03:18.010 --> 03:18.730
+I don't comment.
+
+03:19.060 --> 03:21.850
+Do we go back to disk and remove these changes?
+
+03:22.420 --> 03:28.060
+All of this thing really is what makes or breaks a database.
+
+03:28.510 --> 03:35.830
+And this goes back to most of the questions I receive really is what database should I choose?
+
+03:36.100 --> 03:44.590
+What really you need to understand how these databases work and based on your use case, make a choice.
+
+03:45.130 --> 03:53.050
+There are databases that Kim before commits any right you make right and in the in the queries and the
+
+03:53.050 --> 03:57.340
+transaction they are actually writing to disk so they they assume you're going to commit.
+
+03:58.060 --> 04:00.520
+So they are optimistic in that nature.
+
+04:01.060 --> 04:06.160
+So when you actually in fact commit, I don't need to do any work because I committed.
+
+04:06.160 --> 04:07.810
+I actually wrote everything to disk.
+
+04:08.020 --> 04:17.380
+It will just write one one bit that says this transaction is committed and is so fast, right?
+
+04:18.370 --> 04:21.730
+Other databases doesn't don't write anything.
+
+04:21.730 --> 04:26.410
+So the queries are so fast executing because they are always right to memory.
+
+04:26.590 --> 04:32.680
+But the ones you want to commit, they have to go take everything that is a memory and then flushes
+
+04:32.680 --> 04:33.220
+to disk.
+
+04:33.610 --> 04:36.910
+And that comet will be slow in that regard.
+
+04:37.120 --> 04:40.300
+But the roll back will be as absolutely fast.
+
+04:41.770 --> 04:43.810
+You know, it all depends.
+
+04:45.130 --> 04:47.350
+There is no right or wrong, there is always a tradeoff.
+
+04:48.250 --> 04:48.970
+Take an example.
+
+04:49.960 --> 04:58.030
+This is an example I talk and I talk about in my Trump transaction lecture at almost 30, so I have
+
+04:58.030 --> 05:02.370
+the same table accountable balance thousand five hundred account I.D. one to.
+
+05:02.380 --> 05:06.520
+We want to send money from $100 from account one to account two.
+
+05:06.520 --> 05:07.210
+What do we do?
+
+05:07.750 --> 05:08.470
+Very simple.
+
+05:08.590 --> 05:11.200
+We need to debit this account and created this account.
+
+05:11.380 --> 05:17.590
+So minus 100 this plus 100 this, and we have to do it in a transaction because these two should happen
+
+05:17.590 --> 05:18.400
+at the same time.
+
+05:18.490 --> 05:18.790
+Right?
+
+05:20.660 --> 05:21.740
+So we start a transaction.
+
+05:22.850 --> 05:26.180
+We select the banners to check if this guy even have money.
+
+05:26.330 --> 05:31.730
+And they do because the bonus is greater than 100 because it's a thousand right because that's the account
+
+05:31.730 --> 05:32.000
+one.
+
+05:32.390 --> 05:34.550
+So yeah, let's go ahead and update the account.
+
+05:34.820 --> 05:39.260
+Let's deduct 100 and whatever
+
+05:42.020 --> 05:45.560
+database crashed, I did one change.
+
+05:46.950 --> 05:51.030
+And the second change I wanted to do, but the device crashed.
+
+05:52.920 --> 05:59.070
+We restarted the database, and let's assume this is a bad, badly implemented database system.
+
+05:59.700 --> 06:01.830
+This is what we see when we restore the system.
+
+06:02.490 --> 06:03.750
+We see 900 here.
+
+06:05.780 --> 06:06.800
+What what?
+
+06:08.270 --> 06:14.840
+What happened, so in this case, we just lost $100 in thin air, right?
+
+06:15.110 --> 06:19.920
+That's a really bad that's really bad, inconsistent.
+
+06:19.940 --> 06:21.500
+This is an inconsistent view.
+
+06:21.500 --> 06:28.370
+Not only you just lost actual money that you you have no idea where we're gone because of technology
+
+06:28.370 --> 06:29.120
+effectively, right?
+
+06:29.510 --> 06:34.220
+So after we restarted the machine, the first account has been debated by the other account has not
+
+06:34.220 --> 06:34.910
+been accredited.
+
+06:35.150 --> 06:36.980
+Very bad, inconsistent view.
+
+06:37.370 --> 06:44.810
+So lack of atomistic leads to inconsistencies and we're going to talk about consistencies and it's on
+
+06:45.740 --> 06:46.190
+larger.
+
+06:49.020 --> 06:49.660
+This is really about.
+
+06:49.680 --> 06:50.460
+We just lost data.
+
+06:50.520 --> 06:51.790
+The information is inconsistent.
+
+06:51.810 --> 06:57.690
+We talked about that an atomic transaction is a transaction that will roll back all the queries if one
+
+06:57.690 --> 06:58.860
+or more Kiwis fail.
+
+06:58.950 --> 07:05.670
+Well, in this situation, yeah, there was a failure, but it's not really our fault because my other
+
+07:05.670 --> 07:06.390
+transaction.
+
+07:06.630 --> 07:09.420
+My other query, sorry, didn't even execute.
+
+07:09.900 --> 07:11.180
+So the database got to a star.
+
+07:11.230 --> 07:13.440
+So how do I know to roll back?
+
+07:13.620 --> 07:14.430
+I don't know.
+
+07:14.640 --> 07:17.110
+The database didn't even give it a chance to roll back.
+
+07:17.130 --> 07:22.710
+I can issue the command roll back so the database now is responsible to clean up this garbage.
+
+07:22.920 --> 07:23.660
+It was OK.
+
+07:24.000 --> 07:29.880
+There was ah, in a running transaction, and he has to know that there is a transaction that has been
+
+07:29.880 --> 07:31.920
+running and it was crashed, right?
+
+07:32.220 --> 07:34.980
+So upon restart, we need to clean up.
+
+07:35.370 --> 07:35.670
+Right.
+
+07:37.020 --> 07:40.390
+And let me let me tell you from my professional experience, right?
+
+07:40.410 --> 07:48.900
+I started working professionally back in 2005, and I've seen roll back that takes an hour over an hour,
+
+07:48.900 --> 07:52.590
+actually for long transactions, especially in SQL Server.
+
+07:52.590 --> 07:57.680
+But I've seen rollbacks, not actual rollback commit by the user.
+
+07:57.700 --> 08:01.040
+No, actually, the databases weighed.
+
+08:01.050 --> 08:07.950
+I can even start the database before I roll back this this stuff because it has to go and clean up all
+
+08:07.950 --> 08:09.660
+the garbage that has been written.
+
+08:09.660 --> 08:12.030
+This half garbage that has been written right.
+
+08:12.150 --> 08:13.920
+And this is the garbage has been written here.
+
+08:14.490 --> 08:18.360
+We wrote that debates one account minus one.
+
+08:18.630 --> 08:22.500
+We need to change the 900 back to a thousand to get a consistent view.
+
+08:22.920 --> 08:24.300
+And that's where it all play.
+
+08:24.480 --> 08:28.190
+Some databases are won't let you stored the database before it's rolled back.
+
+08:28.890 --> 08:34.410
+They they've in recent batches in recent releases now say, OK, it's not really that bad.
+
+08:34.890 --> 08:38.310
+Let them roll, roared back and let them continue working on other tables.
+
+08:38.310 --> 08:43.200
+Other databases by this database now is just it's in a all back state.
+
+08:43.740 --> 08:46.560
+So CPU is getting hammered, right?
+
+08:46.770 --> 08:48.000
+Memory is getting hammered.
+
+08:48.570 --> 08:51.060
+All these things really as a result.
+
+08:52.610 --> 08:57.020
+The database should clean this up after it's all we talked about this and we talked about how long this
+
+08:57.020 --> 08:57.560
+could take.
+
+08:58.040 --> 08:58.200
+Right?
+
+08:58.880 --> 09:03.020
+And it really depends on how much you wrote and how long was the transaction.
+
+09:03.350 --> 09:06.710
+Longan transactions is generally a bad idea because of these things.
+
+09:07.190 --> 09:12.680
+Let's do a quick summary on that to most of the city is the idea of the transaction being one unit of
+
+09:12.680 --> 09:15.140
+work and that cannot be split.
+
+09:15.290 --> 09:20.210
+That's the property of an atom police, at least back in 1970.
+
+09:20.600 --> 09:25.160
+If they figure fission nuclear fission, then this, this this.
+
+09:25.370 --> 09:27.500
+This is broken effectively.
+
+09:27.830 --> 09:28.820
+But do you get the idea right?
+
+09:29.030 --> 09:30.050
+So you cannot really.
+
+09:30.470 --> 09:33.940
+An atom should be one unit and cannot be split, right?
+
+09:33.950 --> 09:38.960
+So if if you have a transaction with 100 queries, all these hundred ways should succeed.
+
+09:39.200 --> 09:45.440
+If any of these 100 query fail, all the 100 or anything that is successful in the query should be rolled
+
+09:45.440 --> 09:45.740
+back.
+
+09:46.010 --> 09:50.570
+And not only that, but you should even in the case of a crash in the database.
+
+09:51.410 --> 09:54.170
+So that's not an actual explicit failure by the user.
+
+09:54.710 --> 09:58.250
+That should also roll back the changes.
+
+09:59.210 --> 10:00.470
+That was that tomasetti letter.
+
+10:00.950 --> 10:03.350
+I'm going to see you in the next lecture.
+
+10:04.010 --> 10:04.520
+Stay tuned.

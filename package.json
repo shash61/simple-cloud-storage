@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx nodemon src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:model": "npx sequelize-cli model:generate --name",
+    "db:migrate": "npx sequelize-cli db:migrate --name",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo --name"
   },
   "keywords": [],
   "author": "",

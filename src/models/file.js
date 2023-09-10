@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class File extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,41 +11,41 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsToMany(models.File,{
+      File.belongsToMany(models.User,{
         through: "UserFileShareMapping",
-        foreignKey: "owner_id"
+        foreignKey: "file_id"
+      })
+      File.hasMany(models.Version,{
+        foreignKey: "file_id"
+      })
+      File.hasOne(models.MetaData,{
+        foreignKey: 'file_id'
+      })
+      File.belongsToMany(models.Tags,{
+        through: "FileTagsMappings",
+        foreignKey: "file_id"
       })
     }
   }
-  User.init({
+  File.init({
     id: {
       allowNull: false,
       primaryKey: true,
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
     },
-    username: {
-      type: DataTypes.STRING
-    },
-    email: {
+    filename: {
+      allowNull: false,
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
     },
-    password: {
+    path: {
+      allowNull: false,
       type: DataTypes.STRING,
-      unique: true,
-      allowNull: false
-    },
-    storagePath: {
-      type: DataTypes.STRING,
-      unique: true,
-      allowNull: true,
     },
   }, {
     sequelize,
-    modelName: 'User',
+    modelName: 'File',
     timestamps: true
   });
-  return User;
+  return File;
 };
