@@ -27,6 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER
     },
+    file_id:{
+      allowNull: false,
+      type: DataTypes.UUID
+    }
   }, {
     sequelize,
     modelName: 'Version',

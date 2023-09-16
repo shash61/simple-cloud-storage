@@ -14,7 +14,6 @@ if (dbConfig.use_env_variable) {
 } else {
   sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 }
-
 fs
   .readdirSync(__dirname)
   .filter(file => {

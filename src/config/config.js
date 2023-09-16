@@ -7,7 +7,7 @@
       'database': process.env.DB_DATABASE,
       'seederStorage': "sequelize",
     // Use a different table name. Default: SequelizeData
-    'seederStorageTableName': "sequelize_seed_data",
+    'seederStorageTableName': "SequelizeSeedData",
     'port': '5432'
     }
   }

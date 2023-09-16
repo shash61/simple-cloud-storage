@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         through: "FileTagsMappings",
         foreignKey: "file_id"
       })
+      File.belongsToMany(models.Permissions,{
+        through: "UserFilePermissionMapping",
+        foreignKey:"file_id"
+      })
     }
   }
   File.init({
@@ -42,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING,
     },
+    owner_id:{
+      allowNull: false,
+      type :DataTypes.UUID,
+    }
   }, {
     sequelize,
     modelName: 'File',

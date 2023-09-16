@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('user_file_share_mappings', {
+    await queryInterface.createTable('UserFileShareMappings', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -13,7 +13,7 @@ module.exports = {
         allowNull :false ,
         type: Sequelize.UUID,
         references: {
-          model: "files",
+          model: "Files",
           foreignKey: "id"
         }
       },
@@ -36,6 +36,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('user_file_share_mappings');
+    await queryInterface.dropTable('UserFileShareMappings');
   }
 };

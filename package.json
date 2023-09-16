@@ -8,7 +8,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "db:model": "npx sequelize-cli model:generate --name",
     "db:migrate": "npx sequelize-cli db:migrate --name",
-    "db:migrate:undo": "npx sequelize-cli db:migrate:undo --name"
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo --name",
+    "db:seed": "npx sequelize-cli seed:generate --name",
+    "db:migrate:seed": "npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",

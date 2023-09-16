@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('folders', {
+    await queryInterface.createTable('Folders', {
       id: {
         allowNull: false,
         primaryKey: true,
@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.UUID,
         allowNull: true,
         references:{
-          model:'folders',
+          model:'Folders',
           key: 'id'
         },
       },
@@ -40,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('folders');
+    await queryInterface.dropTable('Folders');
   }
 };

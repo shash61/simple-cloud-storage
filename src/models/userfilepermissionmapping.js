@@ -14,10 +14,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   FilePermissionMapping.init({
-    access_control_type: DataTypes.STRING
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    permission_id:{
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    user_id:{
+      type :DataTypes.UUID,
+      allowNull:false,
+    },
+    file_id:{
+      type :DataTypes.UUID,
+      allowNull:false,
+    },
   }, {
     sequelize,
-    modelName: 'FilePermissionMapping',
+    modelName: 'UserFilePermissionMapping',
+    timestamps: true
   });
   return FilePermissionMapping;
 };

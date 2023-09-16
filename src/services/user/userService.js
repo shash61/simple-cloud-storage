@@ -23,12 +23,7 @@ const registerUser = async(req,res)=>{
           email: email,
           password: hashedPass
         },{transaction: t})
-        // console.log(user,'updating')
-        await user.update({storagePath: `/usr/${user.id}`},{
-          where: {
-            id: user.id
-          }
-        },{transaction: t})
+        await user.update({storagePath: `/usr/${user.id}`},{transaction: t})
         // console.log(updateRes,'update')
         return user
       })
@@ -57,7 +52,7 @@ const loginUser = async(req,res)=>{
       if(response){
         const token = jwt.sign({
         _id: user.id
-        },process.env.JWT_SECRET,{expiresIn: '2h'})
+        },'ssh',{expiresIn: '2h'})
         // send jwt token 
         res.status(200).json({response: {
           token,

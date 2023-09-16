@@ -4,14 +4,14 @@ const db = require("../models")
 const validAuth = async(req,res,next)=>{
   console.log('in valid middleware')
   try{
-    const token = jwt.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET)
+    const token = jwt.verify(req.headers.authorization.split(' ')[1], 'ssh')
     console.log(token)
     const user = await db.User.findOne({
       where:{
         id: token._id
       }
     })
-    req.user = user
+    req.user = user.dataValues
     next()
   }catch(err){
     console.log(err)
