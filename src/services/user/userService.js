@@ -52,7 +52,7 @@ const loginUser = async(req,res)=>{
       if(response){
         const token = jwt.sign({
         _id: user.id
-        },'ssh',{expiresIn: '2h'})
+        },process.env.JWT_SECRET,{expiresIn: '2h'})
         // send jwt token 
         res.status(200).json({response: {
           token,
