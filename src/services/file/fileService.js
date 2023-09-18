@@ -1,35 +1,15 @@
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+const { validationResult } = require("express-validator");
+const upload = require("../../config/multer");
 const db = require("../../models");
+const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    console.log(file, "file", req.body);
-    const userDirectoryName = req.user.id; // Replace with your user identifier logic
-    let userUploadPath = "";
-    console.log(req.body.parent_folder_id);
-    if (req.body.parent_folder_id.length) {
-      // const parentFolderPath =
-      userUploadPath = path.join("uploads", `${parentFolderPath}`);
-    } else {
-      userUploadPath = path.join("uploads", `/usr/${userDirectoryName}`);
-      req.storedPath = userUploadPath;
-    }
 
-    // Create the destination directory if it doesn't exist
-    fs.mkdirSync(userUploadPath, { recursive: true });
-    cb(null, userUploadPath);
-  },
-  filename: function (req, file, cb) {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `${file.originalname}`);
-  },
-});
-
-const upload = multer({ storage: storage }).single("test");
 
 const uploadFile = (req, res, err) => {
+  const errors = validationResult(req)
+  // if(!errors.isEmpty()){
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
   try {
     upload(req, res, async (err) => {
       if (err instanceof multer.MulterError) {
@@ -48,14 +28,14 @@ const uploadFile = (req, res, err) => {
           return res.status(403).json({ err: "file already exists" });
         } else {
           const permissions = JSON.parse(req.body.permissions);
-          const res = await db.sequelize.transaction(async (t) => {
-            console.log(
-              req.file.originalname,
-              req.file.path,
-              req.user.id,
-              req.body.parent_folder_id,
-              "params"
-            );
+          console.log(
+            req.file.originalname,
+            req.file.path,
+            req.user.id,
+            req.body.parent_folder_id,
+            "params"
+          );
+          const resp = await db.sequelize.transaction(async (t) => {
             const file = await db.File.create(
               {
                 filename: req.file.originalname,
@@ -98,7 +78,7 @@ const uploadFile = (req, res, err) => {
             }
             return file;
           });
-          console.log(res, "res");
+          console.log(resp, "res");
           res.status(200).json({message: "file uploaded successfully"})
         }
       }
