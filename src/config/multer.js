@@ -21,11 +21,20 @@ const storage = multer.diskStorage({
     //   cb(null, userUploadPath);
     // },
     filename: function (req, file, cb) {
-      const ext = file.mimetype.split("/")[1];
+      let userUploadPath = ""
+      const userDirectoryName = req.user.id 
+      if (req.body.parent_folder_path.length) {
+        userUploadPath = path.join("uploads", `${parentFolderPath}/${file.originalname}`);
+      } else {
+        userUploadPath = path.join("uploads", `/usr/${userDirectoryName}/${file.originalname}`);
+      }
+      req.storagePath = userUploadPath
+      fs.mkdirSync(userUploadPath, { recursive: true });
+      console.log(req.body)
       cb(null, `${file.originalname}`);
     },
   });
   
-  const upload = multer({ storage: storage }).single("test");
+  const processFile = multer({ storage: storage }).single("file");
 
-  module.exports = upload
+  module.exports = processFile

@@ -3,8 +3,9 @@ const router = express.Router()
 const { checkSchema } = require('express-validator')
 const {upload} = require('../../controllers/file/fileController')
 const { fileUploadSchema } = require('../../validation/fileSchema')
+const processFile = require('../../config/multer')
 
 
-router.post('/upload', checkSchema(fileUploadSchema) ,upload)
+router.post('/upload', processFile, checkSchema(fileUploadSchema) ,upload)
 
 module.exports = router
