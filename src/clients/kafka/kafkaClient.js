@@ -1,6 +1,7 @@
 const { Kafka, logLevel } = require('kafkajs')
 const { KAFKA_UPLOAD_FILE_TOPIC } = require('../../constants')
 const fs = require('fs')
+const path = require('path')
 
 const kafka = new Kafka({
     clientId: process.env.KAFKA_CLIENT_ID,
@@ -12,7 +13,7 @@ const kafka = new Kafka({
     logLevel: logLevel.INFO
 })
 
-
+// console.log(path,'pathh')
 const producer = kafka.producer()
 const consumer = kafka.consumer({groupId: process.env.KAFKA_GROUP_ID})
 
@@ -32,7 +33,7 @@ async function connectConusmer(){
         await consumer.connect();
         await consumer.subscribe({topics: [KAFKA_UPLOAD_FILE_TOPIC], fromBeginning: true})
         consumeMessages()
-        console.log('consumer connected successfully');
+        console.log('------------------consumer connected successfully-----------------');
     }
     catch(err){
         console.error("error in connecting consumer", err)
@@ -62,21 +63,28 @@ async function consumeMessages(){
                 console.log(message.key.toString(), 'key')
                 console.log(message.value.toString(), 'value')
                 if(topic===KAFKA_UPLOAD_FILE_TOPIC){
-                    const data = JSON.parse(message.value.toString())
-                    console.log(data)
-                    const sourcePath = data.file.path
-                    //   if (req.body.parent_folder_id.length) {
+                    const messageData = JSON.parse(message.value.toString())
+                    let sourcePath = messageData.fileDetails.path
+                    let uploadPath = path.join('newuploads1/usr/1')
+                    // let userUploadPath;
+                    // console.log(data)
+                    // const sourcePath = data.file.path
+                    // const userId = data.path.split('/')[2]
+                    // const parentFolderPath = data.folderId
+                    //   if (parentFolderPath) {
                     //     // const parentFolderPath =
-                    //     userUploadPath = path.join("uploads", `${parentFolderPath}`);
+                    //     userUploadPath = path.join("newuploads", `${parentFolderPath}`);
                     //   } else {
-                    //     userUploadPath = path.join("uploads", `/usr/${userDirectoryName}`);
-                    //     req.storedPath = userUploadPath;
+                    //     userUploadPath = path.join("newuploads", `/usr/${userId}`);
+                    //     // req.storedPath = userUploadPath;
                     //   }
                 
-                    //   // Create the destination directory if it doesn't exist
-                    //   fs.mkdirSync(userUploadPath, { recursive: true });
-                    const readStream = fs.createReadStream(sourcePath)
-                    const writeStream = fs.createWriteStream(data.path)
+                      // Create the destination directory if it doesn't exist
+                    fs.mkdirSync(uploadPath, { recursive: true });
+                    const readStream = fs.createReadStream(sourcePath,'utf-8')
+                    console.log(readStream,'----------------fileData----------------')
+                    const writeStream = fs.createWriteStream(`${uploadPath}/${messageData.fileDetails.originalname}`,'utf-8')
+                    console.log(writeStream,'-------------write-------------')
                     readStream.pipe(writeStream)
                     
                     readStream.on('error', (err) => {

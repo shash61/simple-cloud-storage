@@ -13,7 +13,7 @@ const uploadFile = async(req, res, err) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    console.log(req.file.buffer, req.body, req.storagePath,'message')
+    console.log(req.file, req.body, req.storagePath,'message')
         // const storedFiles = await db.File.findAll({
         //   where: {
         //     path: req.storagePath,
@@ -68,7 +68,7 @@ const uploadFile = async(req, res, err) => {
         //     return file;
         //   });
         //   console.log(resp, "res");
-          sendMessageToKafka(KAFKA_UPLOAD_FILE_TOPIC, {partitionKey: req.user.id, data: {path: req.storagePath, file: req.file}})
+          sendMessageToKafka(KAFKA_UPLOAD_FILE_TOPIC, {partitionKey: req.user.id, data: {fileDetails: req.file}})
           res.status(200).json({message: "file uploaded successfully"})
         // }
       }
