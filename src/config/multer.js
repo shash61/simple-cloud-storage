@@ -13,12 +13,16 @@ const storage = multer.diskStorage({
         userUploadPath = path.join("newuploads", `${parentFolderPath}`);
       } else {
         userUploadPath = path.join("newuploads", `/usr/${userDirectoryName}`);
-        req.storedPath = userUploadPath;
+        req.userUploadPath = userUploadPath;
       }
   
       // Create the destination directory if it doesn't exist
-      fs.mkdirSync(userUploadPath, { recursive: true });
-      cb(null, userUploadPath);
+      fs.mkdir(userUploadPath, { recursive: true }, (err)=> {
+        if(err) throw new Error(err)
+      });
+      console.log("-------------calling callback-----")
+      cb(null, '');
+      console.log("-------------finished calling callback-----")
     },
     filename: function (req, file, cb) {
       let userUploadPath = ""
@@ -28,7 +32,7 @@ const storage = multer.diskStorage({
       // } else {
       //   userUploadPath = path.join("uploads", `/usr/${userDirectoryName}/${file.originalname}`);
       // }
-      // req.storagePath = userUploadPath
+      req.storagePath = `${req.storagePath}/${file.originalname}`
       // fs.mkdirSync(userUploadPath, { recursive: true });
       // console.log(req.body)
       cb(null, `${file.originalname}`);

@@ -31,9 +31,9 @@ connectProducer()
 async function connectConusmer(){
     try{
         await consumer.connect();
-        await consumer.subscribe({topics: [KAFKA_UPLOAD_FILE_TOPIC], fromBeginning: true})
-        consumeMessages()
+        await consumer.subscribe({topics: [KAFKA_UPLOAD_FILE_TOPIC]})
         console.log('------------------consumer connected successfully-----------------');
+        consumeMessages()
     }
     catch(err){
         console.error("error in connecting consumer", err)
@@ -80,7 +80,7 @@ async function consumeMessages(){
                     //   }
                 
                       // Create the destination directory if it doesn't exist
-                    fs.mkdirSync(uploadPath, { recursive: true });
+                    fs.mkdirSync(storagePath, { recursive: true });
                     const readStream = fs.createReadStream(sourcePath,'utf-8')
                     console.log(readStream,'----------------fileData----------------')
                     const writeStream = fs.createWriteStream(`${uploadPath}/${messageData.fileDetails.originalname}`,'utf-8')
